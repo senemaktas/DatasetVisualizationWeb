@@ -1,6 +1,6 @@
 # My_DataSet_Visualization_App
 
-<img src="images/language_technology.png" alt="language_technology"	width="800" height="400" /> 
+<img src="static/images/websitevisualization.png" alt="language_technology"	width="800" height="400" /> 
 
 ### Sources:
 - https://github.com/ibrahimokdadov/upload_file_python
