@@ -2,6 +2,14 @@
 
 <img src="static/images/websitevisualization.png" alt="language_technology"	width="800" height="400" /> 
 
+
+|FlaskApp
+- ----|FlaskApp
+- --------|templates
+-         - html files are here
+- --------|static
+-         - css and javascript files are here
+
 ### Sources:
 - https://github.com/ibrahimokdadov/upload_file_python
 - https://www.youtube.com/watch?v=TLgVEBuQURA
