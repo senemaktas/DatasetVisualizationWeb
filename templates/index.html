@@ -2,10 +2,12 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="/home/sidney/VisualizationWebPage/static/styles/style.css"/>
+		<link rel="stylesheet" href="/home/sidney/VisualizationWebPage/static/css/style.css"/>
+		<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" >
         <meta charset="utf-8"/>
-        <link rel="shortcut icon" href="/home/sidney/VisualizationWebPage/static/images/weblogo.png"/>
-        <title>My Visualization Web Page</title>
+		<link rel="shortcut icon" href="/home/sidney/VisualizationWebPage/static/images/weblogo.png"/>
+		<title>My Visualization Web Page</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     </head>
 
 <body >
@@ -19,102 +21,77 @@
     </header>
     	
 	<div class="bodyy">
-      <div class="bodyframe" height="700px"> 
+      <div class="bodyframe"> 
 	    <div class="tableheader">	
             <p>Please fill out all inputs</p>	
 		</div>
 	        <div class="bodycontent">
+
+			<!--this form for file choose-->
+			<form action="/" method="POST" id="form" name="formDS" onsubmit="return butonDataset()"><br/>
+				<input id="submitid" type="submit" value="Dataset" required/> &nbsp &nbsp </form> 
+				
+				<input id="downloadimage" type="submit" value="Download"/> &nbsp &nbsp	
 			
-		    <form action="" method="" id="form" name="form1" onsubmit="return onayla()"><br/>
-		    Import Dataset:&nbsp&nbsp &nbsp <input type="text" name="soyad" maxlength="20"  required /> &nbsp <br/>
-			Input Y variables:&nbsp <input type="text" name="soyad" maxlength="20"  required /> &nbsp <br/>
-			&nbspInput X variables:&nbsp <input type="text" name="kuladi"  required /> &nbsp <br/>			
+           <!--this part for variables choose-->
+			<form action="" method="" id="form" name="form1" onsubmit="return onayla()"><br/>
+			Y variables:&nbsp <input type="text" name="soyad" maxlength="20"  required /> &nbsp <br/>
+			X variables:&nbsp <input type="text" name="kuladi"  required /> &nbsp <br/>			
             
-            Type of plot: &nbsp &nbsp &nbsp &nbsp &nbsp <select name="takim"  required>
-			<option value="fb" size="10px" selected="selected">  Bar plot  </option>  &nbsp &nbsp
-			<option value="bjk">  Box plot </option> 
-			<option value="bjk">  Dot plot </option> 
-			<option value="bjk">  Histogram </option> 
-			<option value="bjk">  Line plot </option>  
-			<option value="gs">   Pie plot  </option>	
-			<option value="bjk">  Scatter plot </option>    	     
-			</select> &nbsp <br/>
-			
-			File type:&nbsp<input type="radio" name="cinsiyet" value="erkek"/><font size="2px">CSV</font> &nbsp 
-            <input type="radio" name="cinsiyet" value="erkek"/><font size="2px">JSON</font> &nbsp
-            <input type="radio" name="cinsiyet" value="erkek"/><font size="2px">XML</font> &nbsp &nbsp&nbsp <br/><br/>
+            &nbsp Choose Plot:&nbsp<select name="plots"  required>
+			<option value="Bar" size="8px" selected="selected">Bar plot</option>  &nbsp &nbsp
+			<option value="Box">Box plot</option> 
+			<option value="Dot">Dot plot</option> 
+			<option value="Histogram">Histogram</option> 
+			<option value="Line">Line plot</option>  
+			<option value="Pie"> Pie plot</option>	
+			<option value="Scatter">Scatter plot</option>    	     
+			</select> &nbsp <br/><br/>
 
             <input type="reset" value="Create"/> &nbsp &nbsp
             <input type="reset" value="Reset"/> &nbsp &nbsp 
-            <input id="submitid" type="submit" value="Download"/> &nbsp &nbsp
-		    </form>
-         </div>
-			
+			</form> 
+		</div>	
+
+
+        <!--Bu kısım verinin gösterileceği kısım-->
+		<div class="tableheader" style="margin-top:-73px;">	
+            <p>See your dataset</p>	
+		</div>
+		<div class="bodyDataset">
+        <p>see your dataset</p>
+        </div>
+
+
+		<!--Bu kısım resmin gösterilceği kısım-->
 			<div class="positionOutputimage">
-			<img class="imageFrame" src="/home/sidney/Vs/weblogo.png" alt="Your plot will show in here!!!"/>
-			</div>
-			
-         </div>
+			<img class="imageFrame"/>
+			 </div>		 			
+		 </div>
 		 
-		 <!--pop-up part-->
+		 <!--pop-up part for upload part -->
 	     <div id="disPopId" class="modal">
          <div class="modal-icerik">
-         <span class="close">&times;</span>
-         <p style=" position:center;">KAYIT BAŞARILI!</p>
-		 </div>
-         </div>
-	
-	
-  <script type="text/javascript" >
-	
-	  function onayla(){
-	
-	    var x=document.forms['form1'][0].value;
-	    var y=document.forms['form1'][1].value;
-        var z=document.forms['form1'][2].value;
-	    var t=document.forms['form1'][3].value;
-		var h=document.forms['form1'][4].value;
-	
-		
-	     if ( (x==null) && (y==null) && (z==null) && (t==null) && (h==null))
+		 <span class="close">&times;</span>
+
+		 <!--When files are being included in the form, you must use POST,
+			 as it would be impossible to submit file data in the query string.-->
+		 <form id="upload-form" action="" method="POST" enctype="multipart/form-data">
+		 <input id="file-picker" type="file" class="file" name="file" accept="file/*" multiple>
+		 <div id="msg"></div> <br/>
+		 <input type="submit" value="Upload!" id="upload-button">
+		</form>
+	     </div> </div>
 		 
-		 {
-		     alert("Lütfen Bütün Alanları Doldurunuz!!!");
-			 
-			 return true;
-		 }
-	   else{
-			// Popup Al
-		var modal = document.getElementById('disPopId');
-		
-		// Kipi açan düğmeyi al
-		var btn = document.getElementById("submitid");
-		
-		// Kipi kapatan <span> öğesini edinin
-		var span = document.getElementsByClassName("close")[0];
-		
-		// Kullanıcı düğmeyi tıklattığında
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-		
-		// Kullanıcı <span> (x) düğmesini tıkladığında, popup
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-		
-		// Kullanıcı modelden başka herhangi bir yeri tıklattıysa, onu kapatın.
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}	 
-	       return false;
-		}
-		
-		
-	}	
-  </script>
-    
+		<!--pop-up part  for fiil out forms completed-->
+		<div id="disPopId" class="modal">
+		<div class="modal-icerik">
+		<span class="close">&times;</span>
+		<p style=" position:center;">KAYIT BAŞARILI!</p>
+		</div>
+		</div>
+
+		<script src="{{url_for('static', filename='myScript.js')}}"></script>
+
 </body>
 </html>
