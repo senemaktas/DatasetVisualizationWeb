@@ -20,3 +20,7 @@
 - https://werkzeug.palletsprojects.com/en/1.0.x/datastructures/#werkzeug.datastructures.FileStorage
 - https://flask-wtf.readthedocs.io/en/stable/
 - Learn Flask for Python - Full Tutorial: https://www.youtube.com/watch?v=Z1RJmh_OqeA github link : https://github.com/jakerieger/FlaskIntroduction
+
+
+Not found flask error message can occur if you installed the python3 version of flask but Visual Studio Code tries to run your project with python2.
+Make sure to select the correct version of python in the editor. This can be done by running the command Python: Select Interpreter from the Command Palette (Ctrl+Shift+P).
